@@ -3,10 +3,13 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import connection.DBConnection;
+import model.Course;
 import model.Teacher;
-import model.User;
+
 
 public class TeacherDao {
 
@@ -200,5 +203,66 @@ public class TeacherDao {
 			
 		}
 	}
+	
+	public static void newPassword(String email, String np)
+	{
+		try {
+			Connection conn = DBConnection.driverConnection();
+			
+			String sql = "update teacher set password = ? where email = ?";
+			
+			PreparedStatement pst = conn.prepareStatement(sql);
+			
+			pst.setString(1, np);
+			pst.setString(2, email);
+			pst.executeUpdate();
+			
+			System.out.println("Password Updated");
+		} 
+		
+		catch (Exception e) {
+			// TODO: handle exception
+			
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	public static List<Teacher> getTeacherName()
+	{
+		List<Teacher> list = new ArrayList<Teacher>();
+		
+		try {
+			
+			Connection conn = DBConnection.driverConnection();
+			String sql = "select * from teacher";
+			PreparedStatement pst = conn.prepareStatement(sql);
+			
+			ResultSet rs = pst.executeQuery();
+			
+			while(rs.next())
+			{
+				Teacher t = new Teacher();
+				
+				t.setId(rs.getInt("id"));
+				t.setName(rs.getString("name"));
+				t.setContact(rs.getLong("contact"));
+				t.setAddress(rs.getString("address"));
+				t.setEmail(rs.getString("email"));
+				t.setPassword(rs.getString("password"));
+				
+				list.add(t);
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	
 }

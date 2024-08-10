@@ -1,6 +1,9 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Random;
+
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,10 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.SellerDao;
+
 import dao.UserDao;
-import model.Seller;
+
 import model.User;
+import service_for_otp.Servicesss;
 
 /**
  * Servlet implementation class UserController
@@ -73,7 +77,7 @@ public class UserController extends HttpServlet {
 			
 		}
 		
-		if(action.equalsIgnoreCase("login"))
+		else if(action.equalsIgnoreCase("login"))
 		{
 			User u = new User();
 			
@@ -127,7 +131,7 @@ public class UserController extends HttpServlet {
 			 */
 		
 		
-		if(action.equalsIgnoreCase("update"))
+		else if(action.equalsIgnoreCase("update"))
 		{
 			
 			
@@ -152,7 +156,7 @@ public class UserController extends HttpServlet {
 			
 		}
 		
-		if(action.equalsIgnoreCase("cp"))
+		else if(action.equalsIgnoreCase("cp"))
 		{
 			int id = Integer.parseInt(request.getParameter("id"));
 			
@@ -187,6 +191,70 @@ public class UserController extends HttpServlet {
 				
 			}
 			
+			
+		}
+		
+		else if(action.equalsIgnoreCase("get-otp")) {
+			
+			String email = request.getParameter("email");
+			boolean flag = UserDao.checkEmail(email);
+			
+			if(flag == true) {
+				Random r = new Random();
+				int num = r.nextInt(999999);
+				
+				Servicesss s = new Servicesss();
+				
+				s.sendMail(email, num);
+				request.setAttribute("email", email);
+				request.setAttribute("otp", num);
+				
+				request.getRequestDispatcher("user-verify-otp.jsp").forward(request, response);
+				
+				
+				
+			}
+			
+			else {
+				System.out.println("If Email is not registered or wrong");
+				request.setAttribute("msg", "Account not registered, Please Register");
+				request.getRequestDispatcher("user-login.jsp").forward(request, response);
+				
+				
+			}
+			
+		}
+		
+		else if(action.equalsIgnoreCase("verify"))
+		{
+			String email = request.getParameter("email");
+			int otp1 = Integer.parseInt(request.getParameter("otp1"));
+			int otp2 = Integer.parseInt(request.getParameter("otp2"));
+			
+			if(otp1 == otp2)
+			{
+				request.setAttribute("email", email);
+			}
+			request.getRequestDispatcher("user-new-password.jsp").forward(request, response);
+		}
+		
+		else if(action.equalsIgnoreCase("new_p")) {
+			
+			String email = request.getParameter("email");
+			String np = request.getParameter("np");
+			String cnp = request.getParameter("cnp");
+			
+			if(np.equals(cnp))
+			{
+				UserDao.newPassword(email, np);
+				
+				response.sendRedirect("user-login.jsp");
+			}
+			
+			else {
+				request.setAttribute("msg","New Password and Confirm Password are not same");
+				request.getRequestDispatcher("user-new-password.jsp").forward(request, response);
+			}
 			
 		}
 		

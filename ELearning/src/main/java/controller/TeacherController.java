@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Random;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,9 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.TeacherDao;
-import dao.UserDao;
+
 import model.Teacher;
-import model.User;
+
+import service_for_otp.Servicesss;
 
 /**
  * Servlet implementation class TeacherController
@@ -174,6 +177,69 @@ String action = request.getParameter("action");
 				
 			}
 			
+			
+		}
+		
+		else if(action.equalsIgnoreCase("get-otp")) {
+			
+			String email = request.getParameter("email");
+			boolean flag = TeacherDao.checkEmail(email);
+			
+			if(flag == true) {
+				Random r = new Random();
+				int num = r.nextInt(999999);
+				
+				Servicesss s = new Servicesss();
+				
+				s.sendMail(email, num);
+				request.setAttribute("email", email);
+				request.setAttribute("otp", num);
+				
+				request.getRequestDispatcher("teacher-verify-otp.jsp").forward(request, response);
+				
+				
+				
+			}
+			
+			else {
+				System.out.println("If Email is not registered or wrong");
+				request.setAttribute("msg", "Account not registered, Please Register");
+				request.getRequestDispatcher("teacher-login.jsp").forward(request, response);
+				
+				
+			}
+			
+		}
+		
+		else if(action.equalsIgnoreCase("verify"))
+		{
+			String email = request.getParameter("email");
+			int otp1 = Integer.parseInt(request.getParameter("otp1"));
+			int otp2 = Integer.parseInt(request.getParameter("otp2"));
+			
+			if(otp1 == otp2)
+			{
+				request.setAttribute("email", email);
+			}
+			request.getRequestDispatcher("teacher-new-password.jsp").forward(request, response);
+		}
+		
+		else if(action.equalsIgnoreCase("new_p")) {
+			
+			String email = request.getParameter("email");
+			String np = request.getParameter("np");
+			String cnp = request.getParameter("cnp");
+			
+			if(np.equals(cnp))
+			{
+				TeacherDao.newPassword(email, np);
+				
+				response.sendRedirect("teacher-login.jsp");
+			}
+			else {
+				request.setAttribute("msg","New Password and Confirm Password are not same");
+				request.getRequestDispatcher("teacher-new-password.jsp").forward(request, response);
+			}
 			
 		}
 		

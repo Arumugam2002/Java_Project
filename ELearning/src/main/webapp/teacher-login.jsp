@@ -53,6 +53,19 @@
 					  
 					  </div>
 					  <% } %>
+					  
+		<% String msg = (String)request.getAttribute("msg");
+                      
+                      if(msg!=null)
+                      {
+                    	  
+                      %> 
+                      
+                      <div class="col-12">
+					  <h4 class="contact-title"><%out.print(msg);%></h4>
+					  
+					  </div>
+					  <% } %>
                 
                 
                  <div class="container-fluid contact py-5">
@@ -73,12 +86,16 @@
                                 
                             </form>
                         </div>
-                        <div class="col-lg-5">
+                        
+                    </div>
+                    <br>
+                     <div class="col-lg-5">
                             
-                            
+                            <h4><a href="teacher-forgot-pass.jsp">Forgot Password?</a></h4>
                             
                         </div>
-                    </div>
+                        
+                         <a href="teacher-register.jsp">Sign Up</a>
                 </div>
             </div>
         </div>

@@ -13,6 +13,35 @@
     font-weight: 700 !important;
 }
 
+.course-item {
+    background: #fff; /* Background color for course item */
+    border-radius: 8px; /* Rounded corners for course item */
+    padding: 15px; /* Padding inside course item */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect for course item */
+}
+
+.course-item img {
+    max-width: 100%; /* Make sure image does not exceed container width */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.feature-caption {
+    text-align: center; /* Center align text */
+    margin-top: 10px; /* Space between image and text */
+}
+
+.price span {
+    font-weight: bold; /* Highlight the price */
+}
+
+@media (max-width: 768px) {
+    .col-lg-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+
 .back-to-top {
     position: fixed;
     display: none;
@@ -20,6 +49,16 @@
     bottom: 45px;
     z-index: 99;
 }
+
+.icon-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px; /* Adjust this as needed */
+}
+
+
+
 
 
 /*** Spinner ***/
@@ -416,6 +455,9 @@
     font-size: 15px;
     border-top: 1px solid rgba(256, 256, 256, .1);
 }
+
+ 
+ 
 
 .footer .copyright a {
     color: var(--light);

@@ -5,12 +5,13 @@
 <head>
     <meta charset="utf-8">
     <title>Simple Learning</title>
+    
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="img/favicon.png" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -80,13 +81,17 @@
                     </div>
                 </div>
                 <a href="contact-page.jsp" class="nav-item nav-link">Contact</a>
+               
+            <a href="user-login.jsp" class="nav-item nav-link"><i class="fa fa-shopping-cart"></i></a>
+            
+            <a href="user-login.jsp" class="nav-item nav-link"><i class="fa fa-heart"><%%></i></a>
             </div>
-            <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="user-login.jsp" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     
     
     
-    <
+    
 </body>
 </html>
