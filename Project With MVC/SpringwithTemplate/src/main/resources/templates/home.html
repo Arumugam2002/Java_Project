@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head th:replace="/fragments/head :: head"></head>
+	
+	
+	<body>
+		
+		<head th:replace="/fragments/header :: header"></head>
+		
+		<div class = "container">
+
+		<table class="table">
+		  <thead>
+		    <tr>
+		      <th scope="col">Id</th>
+		      <th scope="col">Name</th>
+			  <th scope="col">Email</th>
+		      <th scope="col">Contact</th>
+		      <th scope="col">Address</th>
+		      
+		      <th scope="col">Edit</th>
+		      <th scope="col">Delete</th>
+		    </tr>
+		  </thead>
+		  
+		  <tbody>
+		  
+		  
+		  
+		    
+		     <tr th:each="s : ${list}">
+		      <th scope="row " th:text="${s.id }"></th>
+		      <td th:text = "${s.name }"></td>
+			  <td th:text = "${s.email }"></td>
+		      <td th:text = "${s.contact }"></td>
+		      <td th:text = "${s.address }"></td>
+		      
+		      
+		      <td><a th:href="@{/edit/{id}(id=${s.id})}">Edit</a></td>
+		      <td><a th:href="@{/delete/{id}(id=${s.id})}">Delete</a></td>
+		    </tr>
+		    
+		   
+		   
+		  </tbody>
+		</table>
+
+		</div>	
+		
+		
+		<footer th:replace="/fragments/footer :: footer"></footer>
+	</body>
+	
+	
+	
+	
+
+</html>
